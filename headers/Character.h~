@@ -1,0 +1,15 @@
+#include "headers/CharacterInterface.h"
+#include "headers/types.h"
+
+class Character : CharacterInterface
+{
+    private:
+        COORD2D posicao;
+    public:
+        Character();
+
+        void forward();
+        void back();
+        void left();
+        void right();
+};

@@ -1,0 +1,10 @@
+#include "headers/Character.h"
+
+class ControllerInterface
+{
+    public:
+        virtual void moveForward(Character ) = 0;
+        virtual void moveBack(Character ) = 0;
+        virtual void moveLeft(Character ) = 0;
+        virtual void moveRight(Character ) = 0;
+};

@@ -1,0 +1,8 @@
+#include <GLFW/glfw3.h>
+
+class InputInterface
+{
+    public:
+        static void teclado_callback(GLFWwindow* , int , int , int , int );
+        //virtual void mouse_callback();
+};

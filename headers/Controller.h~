@@ -1,0 +1,13 @@
+#include "headers/ControllerInterface.h"
+
+class Controller : ControllerInterface
+{
+    private:
+        Character c;
+    public:
+        Controller(Character );
+        void moveForward(Character );
+        void moveBack(Character );
+        void moveLeft(Character );
+        void moveRight(Character );
+};
