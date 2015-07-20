@@ -16,21 +16,21 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **************************************************************************/
 
-#include "CharacterInterface.h"
-#include "Inputable.h"
+#ifndef _aresta_
+#define _aresta_
 
-class Character : CharacterInterface, public Inputable, public Drawable
+#include "Quadrado.fwd.h"
+
+class Aresta
 {
     private:
-        const float size = 15;
-
-        void up();
-        void down();
-        void left();
-        void right();
+        Quadrado *origem, *destino;
+        int peso;
     public:
-        Character(int , int );
-        void executeInput(int , int );
-
-        void draw();
+        Aresta(Quadrado* , Quadrado* , int );
+        Quadrado* getOrigem();
+        Quadrado* getDestino();
+        int getPeso();
 };
+
+#endif // _aresta_

@@ -16,21 +16,28 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **************************************************************************/
 
-#include "CharacterInterface.h"
-#include "Inputable.h"
+#ifndef _ambiente_
+#define _ambiente_
 
-class Character : CharacterInterface, public Inputable, public Drawable
+#include "Quadrado.fwd.h"
+
+#include <vector>
+
+class Ambiente
 {
     private:
-        const float size = 15;
+        const static int QTD_LARGURA = 15, QTD_ALTURA = 15, PESO = 1;
+        std::vector<std::vector<Quadrado*> > matriz;
+        Quadrado *entrada, *saida;
 
-        void up();
-        void down();
-        void left();
-        void right();
+        void init();
+        void imperfeito();
+        std::vector<Quadrado*> pegaAcessiveis(Quadrado* );
+        std::vector<Quadrado*> getAdjacentesMuros(Quadrado* );
+        std::vector<Quadrado*> getAdjacentes(Quadrado* );
     public:
-        Character(int , int );
-        void executeInput(int , int );
-
-        void draw();
+        void geraLabirinto();
+        ~Ambiente();
 };
+
+#endif // _ambiente_

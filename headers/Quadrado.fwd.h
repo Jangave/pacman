@@ -16,21 +16,9 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **************************************************************************/
 
-#include "CharacterInterface.h"
-#include "Inputable.h"
+#ifndef _quadrado_fwd_
+#define _quadrado_fwd_
 
-class Character : CharacterInterface, public Inputable, public Drawable
-{
-    private:
-        const float size = 15;
+class Quadrado;
 
-        void up();
-        void down();
-        void left();
-        void right();
-    public:
-        Character(int , int );
-        void executeInput(int , int );
-
-        void draw();
-};
+#endif // _quadrado_fwd_

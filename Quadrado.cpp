@@ -16,57 +16,65 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **************************************************************************/
 
-#include "headers/Character.h"
-#include "headers/functions.h"
+#include "headers/Quadrado.h"
 
-#include <cmath>
+Quadrado::Quadrado(){}
 
-Character::Character(int x, int y)
+Quadrado::Quadrado(int i, int j)
 {
-    this->position.x = x;
-    this->position.y = y;
+    this->i = i;
+    this->j = j;
 }
 
-void Character::up()
+Quadrado::~Quadrado()
 {
-    this->position.y++;
+    levantarMuros();
 }
 
-void Character::down()
+void Quadrado::levantarMuros()
 {
-    this->position.y--;
+    for (int i = 0; i < arestas.size(); i++)
+        delete arestas[i];
+    arestas.clear();
 }
 
-void Character::left()
+void Quadrado::addAresta(Aresta* a)
 {
-    this->position.x--;
+    arestas.push_back(a);
 }
 
-void Character::right()
+bool Quadrado::isConectado(Quadrado* q)
 {
-    this->position.x++;
-}
+    std::vector<Aresta> arestasAdjacente = q->getArestas();
 
-void Character::executeInput(int key, int action)
-{
-    if (action == GLFW_PRESS)
+    for (int i = 0; i < arestas.size(); i++)
     {
-        if (key == GLFW_KEY_RIGHT)
-            this->right();
-        else if (key == GLFW_KEY_LEFT)
-            this->left();
-        else if (key == GLFW_KEY_UP)
-            this->up();
-        else if (key == GLFW_KEY_DOWN)
-            this->down();
+        for (int j = 0; j < arestasAdjacente.size(); j++)
+        {
+            if (arestas[i] == arestasAdjacente[j])
+                return true;
+        }
     }
+
+    return false;
 }
 
-void Character::draw()
+bool Quadrado::isMuro()
 {
-    glBegin(GL_TRIANGLE_FAN);
-        glVertex3f(this->position.x, this->position.y, 0);
-        for (int i = 45; i <= 315; i++)
-            glVertex3f(cos(toRadian(i)) * size + this->position.x, sin(toRadian(i)) * size + this->position.y, 0);
-    glEnd();
+    return arestas.empty();
+}
+
+std::vector<Aresta*> Quadrado::getArestas()
+{
+    return arestas;
+}
+
+int Quadrado::getI()
+{
+    return i;
+}
+
+int Quadrado::getJ()
+{
+    return j;
 }

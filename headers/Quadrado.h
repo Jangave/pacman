@@ -16,21 +16,30 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **************************************************************************/
 
-#include "CharacterInterface.h"
-#include "Inputable.h"
+#ifndef _quadrado_
+#define _quadrado_
 
-class Character : CharacterInterface, public Inputable, public Drawable
+#include "Aresta.fwd.h"
+
+#include <vector>
+
+class Quadrado
 {
     private:
-        const float size = 15;
-
-        void up();
-        void down();
-        void left();
-        void right();
+        int i, j;
+        std::vector<Aresta*> arestas;
     public:
-        Character(int , int );
-        void executeInput(int , int );
+        Quadrado();
+        Quadrado(int , int );
+        ~Quadrado(); //necessary to clean up the connections to the node destroyed
+        void levantarMuros();
+        void addAresta(Aresta* a);
+        bool isConectado(Quadrado* );
+        bool isMuro();
+        std::vector<Aresta*> getArestas();
 
-        void draw();
+        int getI();
+        int getJ();
 };
+
+#endif // _quadrado_

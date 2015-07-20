@@ -16,21 +16,26 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **************************************************************************/
 
-#include "CharacterInterface.h"
-#include "Inputable.h"
+#include "headers/Aresta.h"
 
-class Character : CharacterInterface, public Inputable, public Drawable
+Aresta::Aresta(Quadrado* origem, Quadrado* destino, int peso)
 {
-    private:
-        const float size = 15;
+    this->origem = origem;
+    this->destino = destino;
+    this->peso = peso;
+}
 
-        void up();
-        void down();
-        void left();
-        void right();
-    public:
-        Character(int , int );
-        void executeInput(int , int );
+Quadrado* Aresta::getOrigem()
+{
+    return this->origem;
+}
 
-        void draw();
-};
+Quadrado* Aresta::getDestino()
+{
+    return this->destino;
+}
+
+int Aresta::getPeso()
+{
+    return this->peso;
+}

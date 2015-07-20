@@ -19,11 +19,11 @@
 #ifndef _window_
 #define _window_
 
-#include <GLFW/glfw3.h>
-
-#include <vector>
 #include "Drawable.h"
 #include "Inputable.h"
+
+#include <GLFW/glfw3.h>
+#include <vector>
 
 class Window : public Inputable
 {
@@ -34,9 +34,11 @@ class Window : public Inputable
         Window(const char* , int , int );
         bool shouldClose();
         GLFWwindow* window();
+        void prepareEnvironment();
+        void setEnvironment();
+
         void addDrawable(Drawable* );
         void draw();
-
         void executeInput(int , int );
 };
 
