@@ -16,14 +16,53 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **************************************************************************/
 
-#include "headers/Ambiente.h"
 #include "headers/functions.h"
+#include "headers/Ambiente.h"
 #include "headers/Quadrado.h"
 #include "headers/Aresta.h"
+#include "headers/Character.h"
 
 #include <vector>
 #include <limits>
 #include <stack>
+
+template<>
+bool vectorContains<Quadrado*>(std::vector<Quadrado*> v, Quadrado* p)
+{
+    for (int i = 0; i < v.size(); i++)
+    {
+        if (v[i] == p)
+            return true;
+    }
+
+    return false;
+}
+
+int Ambiente::PESO = 1;
+int Ambiente::QTD_ALTURA = 15;
+int Ambiente::QTD_LARGURA = 15;
+
+Ambiente::Ambiente(int width, int height)
+{
+    for (int i = 0; i < Ambiente::QTD_ALTURA; i++)
+    {
+        std::vector<Quadrado*> linha;
+        for (int j = 0; j < Ambiente::QTD_LARGURA; j++)
+        {
+            Quadrado* q = new Quadrado(i, j);
+            linha.push_back(q);
+            linha[j]->levantarMuros();
+
+            addDrawable(q);
+        }
+
+        matriz.push_back(linha);
+    }
+
+    Character* c = new Character(width/2, height/2);
+    addDrawable(c);
+    addInputable(c);
+}
 
 Ambiente::~Ambiente()
 {
@@ -37,28 +76,8 @@ Ambiente::~Ambiente()
     matriz.clear();
 }
 
-void Ambiente::init()
+void Ambiente::limpa()
 {
-    matriz.clear();
-    for (int i = 0; i < Ambiente::QTD_ALTURA; i++)
-    {
-        std::vector<Quadrado*> linha;
-        for (int j = 0; j < Ambiente::QTD_LARGURA; j++)
-        {
-            linha.push_back(new Quadrado(i, j));
-            linha[j]->levantarMuros();
-        }
-
-        matriz.push_back(linha);
-    }
-}
-
-void Ambiente::geraLabirinto()
-{
-    init();
-    //limpa();
-    std::stack<Quadrado*> pilhaDePosicoes;
-
     for (int i = 0; i < Ambiente::QTD_ALTURA; i++)
     {
         for (int j = 0; j < Ambiente::QTD_LARGURA; j++)
@@ -66,6 +85,12 @@ void Ambiente::geraLabirinto()
             matriz[i][j]->levantarMuros();
         }
     }
+}
+
+void Ambiente::geraLabirinto()
+{
+    limpa();
+    std::stack<Quadrado*> pilhaDePosicoes;
 
     Quadrado* atual = matriz[randomize(Ambiente::QTD_ALTURA)][randomize(Ambiente::QTD_LARGURA)];
     int qtdVisitadas = -1;
@@ -115,7 +140,7 @@ void Ambiente::imperfeito()
                 {
                     proximo = adj.at(randomize(adj.size()));
                     contadora++;
-                } while (vectorContains(acessiveis, q) && !acessiveis.empty() && contadora <= 3);
+                } while (vectorContains<Quadrado*>(acessiveis, q) && !acessiveis.empty() && contadora <= 3);
 
                 Aresta* a = new Aresta(q, proximo, Ambiente::PESO);
                 q->addAresta(a);
@@ -172,4 +197,30 @@ std::vector<Quadrado*> Ambiente::getAdjacentes(Quadrado* atual)
         }
     }
     return adj;
+}
+
+void Ambiente::addInputable(Inputable* i)
+{
+    inputables.push_back(i);
+}
+
+void Ambiente::executeInput(int key, int action)
+{
+    for (int i = 0; i < inputables.size(); i++)
+    {
+        inputables[i]->executeInput(key, action);
+    }
+}
+
+void Ambiente::addDrawable(Drawable* d)
+{
+    drawables.push_back(d);
+}
+
+void Ambiente::draw()
+{
+    for (int i = 0; i < drawables.size(); i++)
+    {
+        drawables[i]->draw();
+    }
 }

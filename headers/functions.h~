@@ -16,16 +16,24 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **************************************************************************/
 
-#ifndef _types_
-#define _types_
+#ifndef _functions_
+#define _functions_
+
+#include "Window.h"
 
 #include <GLFW/glfw3.h>
+#include <vector>
 
-const double PI = 3.14159;
+void initialize();
+void finalize(Window );
+void finalize();
+static void error(int , const char* );
+long randomize(int i = 0, int f = 0);
+double toRadian(int );
+double toRadian(float );
+double toRadian(double );
 
-typedef struct
-{
-    double x = 0, y = 0;
-} COORD2D;
+template<class T>
+bool vectorContains(std::vector<T*> , T*);
 
-#endif // _types_
+#endif // _functions_

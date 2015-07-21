@@ -23,9 +23,9 @@
 int InputInterface::key = GLFW_KEY_UNKNOWN;
 int InputInterface::action = GLFW_PRESS;
 
-InputInterface::InputInterface(Window w, int FLAG_KEYBOARD, int FLAG_MOUSE, int FLAG_JOYSTICK)
+InputInterface::InputInterface(Window* w, int FLAG_KEYBOARD, int FLAG_MOUSE, int FLAG_JOYSTICK)
 {
-    glfwSetKeyCallback(w.window(), keyboard_callback);
+    glfwSetKeyCallback(w->window(), keyboard_callback);
 }
 
 static void InputInterface::keyboard_callback(GLFWwindow* window, int k, int scancode, int a, int mods)

@@ -45,7 +45,7 @@ void Quadrado::addAresta(Aresta* a)
 
 bool Quadrado::isConectado(Quadrado* q)
 {
-    std::vector<Aresta> arestasAdjacente = q->getArestas();
+    std::vector<Aresta*> arestasAdjacente = q->getArestas();
 
     for (int i = 0; i < arestas.size(); i++)
     {
@@ -77,4 +77,9 @@ int Quadrado::getI()
 int Quadrado::getJ()
 {
     return j;
+}
+
+void Quadrado::draw()
+{
+
 }

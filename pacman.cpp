@@ -17,17 +17,13 @@
 **************************************************************************/
 
 /** TO-DO
-    * Arrumar tipo cor [functions.h]
+    1 TESTAR AMBIENTE
 */
 
 #include "headers/functions.h"
-#include "headers/types.h"
 #include "headers/Window.h"
 #include "headers/InputInterface.h"
-#include "headers/Character.h"
-
-#include "headers/Inputable.h"
-#include "headers/Drawable.h"
+#include "headers/Ambiente.h"
 
 //#include <iostream>
 //#include <typeinfo>
@@ -36,26 +32,30 @@
 
 int main()
 {
-    initialize();
-    Window* janela = new Window("Pacman - Teste", 640, 480);
-    InputInterface i(*janela, 1, 0, 0);
-    Character* c = new Character();
+    int w = 640, h = 480;
 
-    i.addInputable(c);
+    initialize();
+    Window* janela = new Window("Pacman - Teste", w, h);
+    InputInterface i(janela, 1, 0, 0);
+    Ambiente ambiente(w, h);
+
+    //Just to allow close
     i.addInputable(janela);
 
-    janela->addDrawable(c);
+    i.addInputable(&ambiente);
+    janela->addDrawable(&ambiente);
 
     while (!janela->shouldClose())
     {
-        prepareEnvironment(*janela);
+        janela->prepareEnvironment();
 
         janela->draw();
 
         i.execute();
-        setEnvironment(*janela);
+        janela->setEnvironment();
     }
 
-    finalize(*janela);
+    delete janela;
+    finalize();
     return 0;
 }

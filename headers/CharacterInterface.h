@@ -19,7 +19,6 @@
 #ifndef _character_interface_
 #define _character_interface_
 
-#include "Drawable.h"
 #include "types.h"
 
 class CharacterInterface

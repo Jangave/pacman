@@ -19,15 +19,9 @@
 #ifndef _functions_
 #define _functions_
 
-#include "Window.h"
-
-#include <GLFW/glfw3.h>
 #include <vector>
 
-const double PI = 3.14159;
-
 void initialize();
-void finalize(Window );
 void finalize();
 static void error(int , const char* );
 long randomize(int i = 0, int f = 0);
@@ -35,8 +29,7 @@ double toRadian(int );
 double toRadian(float );
 double toRadian(double );
 
-
 template<class T>
-bool vectorContains(std::vector<T> , T);
+bool vectorContains(std::vector<T> , T );
 
 #endif // _functions_

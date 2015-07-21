@@ -16,16 +16,30 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **************************************************************************/
 
-#ifndef _types_
-#define _types_
+#ifndef _quadrado_
+#define _quadrado_
 
-#include <GLFW/glfw3.h>
+#include "Aresta.fwd.h"
 
-const double PI = 3.14159;
+#include <vector>
 
-typedef struct
+class Quadrado
 {
-    double x = 0, y = 0;
-} COORD2D;
+    private:
+        int i, j;
+        std::vector<Aresta*> arestas;
+    public:
+        Quadrado();
+        Quadrado(int , int );
+        ~Quadrado(); //necessary to clean up the connections to the destroyed node
+        void levantarMuros();
+        void addAresta(Aresta* a);
+        bool isConectado(Quadrado* );
+        bool isMuro();
+        std::vector<Aresta*> getArestas();
 
-#endif // _types_
+        int getI();
+        int getJ();
+};
+
+#endif // _quadrado_

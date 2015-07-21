@@ -18,11 +18,12 @@
 
 #include "CharacterInterface.h"
 #include "Inputable.h"
+#include "Drawable.h"
 
-class Character : CharacterInterface, public Inputable, public Drawable
+class Character : public CharacterInterface, public Inputable, public Drawable
 {
     private:
-        const float size = 15;
+        float size;
 
         void up();
         void down();
@@ -30,7 +31,7 @@ class Character : CharacterInterface, public Inputable, public Drawable
         void right();
     public:
         Character(int , int );
-        void executeInput(int , int );
 
+        void executeInput(int , int );
         void draw();
 };

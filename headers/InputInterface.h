@@ -31,7 +31,7 @@ class InputInterface
     public:
         static void keyboard_callback(GLFWwindow* , int , int , int , int );
         static int key, action;
-        InputInterface(Window , int , int , int );
+        InputInterface(Window* , int , int , int );
         void addInputable(Inputable* i);
         void execute();
 };

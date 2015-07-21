@@ -20,10 +20,11 @@
 #define _quadrado_
 
 #include "Aresta.fwd.h"
+#include "Drawable.h"
 
 #include <vector>
 
-class Quadrado
+class Quadrado : public Drawable
 {
     private:
         int i, j;
@@ -31,7 +32,7 @@ class Quadrado
     public:
         Quadrado();
         Quadrado(int , int );
-        ~Quadrado(); //necessary to clean up the connections to the node destroyed
+        ~Quadrado(); //necessary to clean up the connections to the destroyed node
         void levantarMuros();
         void addAresta(Aresta* a);
         bool isConectado(Quadrado* );
@@ -40,6 +41,8 @@ class Quadrado
 
         int getI();
         int getJ();
+
+        void draw();
 };
 
 #endif // _quadrado_

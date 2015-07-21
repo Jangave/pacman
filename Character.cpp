@@ -23,6 +23,7 @@
 
 Character::Character(int x, int y)
 {
+    size = 15;
     this->position.x = x;
     this->position.y = y;
 }

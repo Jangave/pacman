@@ -25,13 +25,14 @@
 #include <GLFW/glfw3.h>
 #include <vector>
 
-class Window : public Inputable
+class Window : public Inputable, public Drawable
 {
     private:
         GLFWwindow* w;
         std::vector<Drawable*> l;
     public:
         Window(const char* , int , int );
+        ~Window();
         bool shouldClose();
         GLFWwindow* window();
         void prepareEnvironment();

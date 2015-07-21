@@ -16,25 +16,17 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **************************************************************************/
 
-#include <iostream>
-
 #include "headers/functions.h"
+#include "headers/types.h"
 
+#include <iostream>
+#include <cstdlib>
 #include <GLFW/glfw3.h>
 
 void initialize()
 {
     if (!glfwInit())
         std::cerr << "Impossível inicializar o GLFW." << std::endl;
-
-    glfwSwapInterval(1); //vsync - how many frames to wait until swap buffers; standard(zero) wastes a lot of CPU and GPU
-}
-
-void finalize(Window w)
-{
-    if (w.window())
-        glfwDestroyWindow(w.window());
-    glfwTerminate();
 }
 
 void finalize()
@@ -47,27 +39,49 @@ static void error(int e, const char* descricao)
     std::cerr << e << ": " << descricao << std::endl;
 }
 
-void prepareEnvironment(Window w)
+long randomize(int i, int f)
 {
-    int width, height;
-    glfwGetFramebufferSize(w.window(), &width, &height);
+    static bool start = true;
 
-    glViewport(0, 0, width, height);
-    int ratio = width / (float) height;
+    if (start)
+    {
+        srand(time(0));
+        start = false;
+    }
 
-    glClear(GL_COLOR_BUFFER_BIT);
+    long n;
 
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
+    if(f == 0)
+      n = rand();
+   else
+      n = rand() % (f - i);
 
-    glOrtho(-ratio, ratio, -1., 1., 1., -1.);
-
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
+   return n + i;
 }
 
-void setEnvironment(Window w)
+double toRadian(int i)
 {
-    glfwSwapBuffers(w.window());
-    glfwPollEvents();
+    return (i*PI)/180.d;
+}
+
+double toRadian(float f)
+{
+    return (f*PI)/180.d;
+}
+
+double toRadian(double d)
+{
+    return (d*PI)/180.d;
+}
+
+template<class T>
+bool vectorContains(std::vector<T> v, T p)
+{
+    for (int i = 0; i < v.size(); i++)
+    {
+        if (v[i] == p)
+            return true;
+    }
+
+    return false;
 }

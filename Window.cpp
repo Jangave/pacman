@@ -16,9 +16,9 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **************************************************************************/
 
-#include <iostream>
-
 #include "headers/Window.h"
+
+#include <iostream>
 #include <cstdlib>
 
 Window::Window(const char* title, int width, int height)
@@ -28,17 +28,52 @@ Window::Window(const char* title, int width, int height)
         std::cerr << "It was not possible to create a window." << std::endl;
     else
         glfwMakeContextCurrent(this->w); //Makes window as active context
+
+    glfwSwapInterval(1); //vsync - how many frames to wait until swap buffers; standard(zero) wastes a lot of CPU and GPU
+}
+
+Window::~Window()
+{
+    if (window())
+        glfwDestroyWindow(window());
+    l.clear();
 }
 
 bool Window::shouldClose()
 {
-    return glfwWindowShouldClose(this->w);
+    return glfwWindowShouldClose(window());
 }
 
 GLFWwindow* Window::window()
 {
     return this->w;
 }
+
+void Window::prepareEnvironment()
+{
+    int width, height;
+    glfwGetFramebufferSize(window(), &width, &height);
+
+    glViewport(0, 0, width, height);
+    int ratio = width / (float) height;
+
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+
+    glOrtho(0, width, 0, height, 1., -1.);
+
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+}
+
+void Window::setEnvironment()
+{
+    glfwSwapBuffers(window());
+    glfwPollEvents();
+}
+
 
 void Window::addDrawable(Drawable* d)
 {
@@ -57,5 +92,5 @@ void Window::executeInput(int key, int action)
 {
     if (action == GLFW_PRESS)
         if (key == GLFW_KEY_ESCAPE)
-            exit(255);
+            glfwSetWindowShouldClose(window(), GL_TRUE);
 }

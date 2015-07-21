@@ -20,24 +20,36 @@
 #define _ambiente_
 
 #include "Quadrado.fwd.h"
+#include "Inputable.h"
+#include "Drawable.h"
 
 #include <vector>
 
-class Ambiente
+class Ambiente : public Drawable, public Inputable
 {
     private:
-        const static int QTD_LARGURA = 15, QTD_ALTURA = 15, PESO = 1;
+        static int QTD_LARGURA, QTD_ALTURA, PESO;
         std::vector<std::vector<Quadrado*> > matriz;
         Quadrado *entrada, *saida;
 
-        void init();
+        std::vector<Inputable*> inputables;
+        std::vector<Drawable*> drawables;
+
+        void limpa();
         void imperfeito();
         std::vector<Quadrado*> pegaAcessiveis(Quadrado* );
         std::vector<Quadrado*> getAdjacentesMuros(Quadrado* );
         std::vector<Quadrado*> getAdjacentes(Quadrado* );
+
+        void addInputable(Inputable* );
+        void addDrawable(Drawable* );
     public:
         void geraLabirinto();
+        Ambiente(int , int );
         ~Ambiente();
+
+        void executeInput(int , int );
+        void draw();
 };
 
 #endif // _ambiente_
