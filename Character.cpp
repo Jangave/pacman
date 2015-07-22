@@ -21,9 +21,9 @@
 
 #include <cmath>
 
-Character::Character(int x, int y)
+Character::Character(int x, int y, int ratio)
 {
-    size = 15;
+    this->raio = ratio;
     this->position.x = x;
     this->position.y = y;
 }
@@ -65,9 +65,10 @@ void Character::executeInput(int key, int action)
 
 void Character::draw()
 {
+    glLineWidth(1);
     glBegin(GL_TRIANGLE_FAN);
         glVertex3f(this->position.x, this->position.y, 0);
         for (int i = 45; i <= 315; i++)
-            glVertex3f(cos(toRadian(i)) * size + this->position.x, sin(toRadian(i)) * size + this->position.y, 0);
+            glVertex3f(cos(toRadian(i)) * raio + this->position.x, sin(toRadian(i)) * raio + this->position.y, 0);
     glEnd();
 }

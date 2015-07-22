@@ -19,19 +19,23 @@
 #ifndef _quadrado_
 #define _quadrado_
 
-#include "Aresta.fwd.h"
+#include "Aresta.h"
 #include "Drawable.h"
+#include "types.h"
 
 #include <vector>
 
 class Quadrado : public Drawable
 {
     private:
+        COORD2D pos;
+        int sizeH, sizeV;
         int i, j;
         std::vector<Aresta*> arestas;
     public:
         Quadrado();
         Quadrado(int , int );
+        Quadrado(int , int , int , int );
         ~Quadrado(); //necessary to clean up the connections to the destroyed node
         void levantarMuros();
         void addAresta(Aresta* a);
@@ -41,6 +45,7 @@ class Quadrado : public Drawable
 
         int getI();
         int getJ();
+        COORD2D getPos();
 
         void draw();
 };

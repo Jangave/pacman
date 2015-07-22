@@ -38,6 +38,7 @@ int main()
     Window* janela = new Window("Pacman - Teste", w, h);
     InputInterface i(janela, 1, 0, 0);
     Ambiente ambiente(w, h);
+    ambiente.geraLabirinto();
 
     //Just to allow close
     i.addInputable(janela);

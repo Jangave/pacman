@@ -49,7 +49,7 @@ Ambiente::Ambiente(int width, int height)
         std::vector<Quadrado*> linha;
         for (int j = 0; j < Ambiente::QTD_LARGURA; j++)
         {
-            Quadrado* q = new Quadrado(i, j);
+            Quadrado* q = new Quadrado(i, j, width/Ambiente::QTD_LARGURA, height/Ambiente::QTD_ALTURA);
             linha.push_back(q);
             linha[j]->levantarMuros();
 
@@ -59,7 +59,15 @@ Ambiente::Ambiente(int width, int height)
         matriz.push_back(linha);
     }
 
-    Character* c = new Character(width/2, height/2);
+    int ratio;
+    if (width/Ambiente::QTD_LARGURA < height/Ambiente::QTD_ALTURA)
+        ratio = width/(Ambiente::QTD_LARGURA + 3);
+    else
+        ratio = height/(Ambiente::QTD_ALTURA + 3);
+
+    Quadrado* random = matriz[randomize(Ambiente::QTD_ALTURA)][randomize(Ambiente::QTD_LARGURA)];
+
+    Character* c = new Character(random->getPos().x, random->getPos().y, ratio/2);
     addDrawable(c);
     addInputable(c);
 }
@@ -93,8 +101,7 @@ void Ambiente::geraLabirinto()
     std::stack<Quadrado*> pilhaDePosicoes;
 
     Quadrado* atual = matriz[randomize(Ambiente::QTD_ALTURA)][randomize(Ambiente::QTD_LARGURA)];
-    int qtdVisitadas = -1;
-
+    int qtdVisitadas = 1;
     while (qtdVisitadas < (Ambiente::QTD_ALTURA * Ambiente::QTD_LARGURA))
     {
         std::vector<Quadrado*> vizinhasMuro = getAdjacentesMuros(atual);
@@ -116,9 +123,8 @@ void Ambiente::geraLabirinto()
             atual = pilhaDePosicoes.top();
             pilhaDePosicoes.pop();
         }
-
-        imperfeito();
     }
+    imperfeito();
 }
 
 void Ambiente::imperfeito()

@@ -52,11 +52,11 @@ long randomize(int i, int f)
     long n;
 
     if(f == 0)
-      n = rand();
+      n = rand() % i;
    else
-      n = rand() % (f - i);
+      n = (rand() % (f - i)) + i;
 
-   return n + i;
+   return n;
 }
 
 double toRadian(int i)

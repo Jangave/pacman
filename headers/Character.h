@@ -23,14 +23,14 @@
 class Character : public CharacterInterface, public Inputable, public Drawable
 {
     private:
-        float size;
+        int raio;
 
         void up();
         void down();
         void left();
         void right();
     public:
-        Character(int , int );
+        Character(int , int , int );
 
         void executeInput(int , int );
         void draw();

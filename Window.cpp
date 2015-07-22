@@ -82,6 +82,7 @@ void Window::addDrawable(Drawable* d)
 
 void Window::draw()
 {
+    glClearColor(1, 1, 1, 1);
     for (int i = 0; i < l.size(); i++)
     {
         l[i]->draw();
